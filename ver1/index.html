@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>[SIOT] Week 3 Heat Flow Challenge</title>
+<title>[SIOT] Gua Sha HEAT Challenge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   :root {
@@ -69,12 +69,10 @@
   :root[data-theme="dark"] .brandmark-logo { filter: invert(1); }
   :root[data-theme="light"] .brandmark-logo { filter: none; }
   .brandbar-left .block-kicker { margin: 0; padding-top: 2px; }
-  .brand-sub { font-size: 12px; color: var(--ink-soft); }
-  @media (max-width: 479px) { .brand-sub { font-size: 10px; } }
 
   .hero { padding: 20px 0 4px; }
 
-  /* ---- Logic/Script Accordion ---- */
+  /* Logic/Script Accordion */
   .logic-section {
     margin-bottom: 28px;
     background: var(--amber-bg);
@@ -149,16 +147,6 @@
     font-weight: 800;
   }
 
-  .common-reqs-card {
-    margin-top: 14px; background: #f0d48c; border: 2.5px solid var(--brown);
-    border-radius: 16px; padding: 20px 24px; box-shadow: var(--shadow);
-  }
-  .common-reqs-label {
-    display: flex; align-items: center; gap: 6px; font-family: var(--font-mono);
-    font-size: 18px; font-weight: 800; letter-spacing: 0.1em; color: var(--brown-strong);
-    text-transform: uppercase; margin-bottom: 0;
-  }
-
   section.block { margin-top: 26px; }
   .block-head { margin-bottom: 12px; }
   .block-kicker {
@@ -168,7 +156,7 @@
   .block-title { font-size: 18px; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brown-strong); }
   .block-note { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0 0; }
 
-  /* ---- part chips: one row on desktop, wraps to 2+ on mobile ---- */
+  /* Part chips */
   .part-grid { display: flex; flex-wrap: wrap; gap: 7px; }
   .part-chip {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
@@ -187,9 +175,8 @@
   .part-chip.is-selected { border-color: var(--brown); background: var(--amber-bg); }
   .part-chip.is-selected .icon { background: var(--brown); color: #fff; }
   .part-chip.is-selected .txt b { color: var(--brown-strong); }
-  @media (prefers-reduced-motion: reduce) { .part-chip { transition: none; } }
 
-  /* ---- mission board: always 3 columns side by side, one box per column ---- */
+  /* Mission grid */
   .mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 14px; }
   .mission-card {
     position: relative;
@@ -213,82 +200,42 @@
     font-family: var(--font-mono); font-size: 14px; font-weight: 700;
     letter-spacing: 0.06em; color: var(--brown); text-transform: uppercase; margin-bottom: 8px;
   }
+  .mission-video {
+    width: 100%; height: clamp(120px, 40vw, 180px); border-radius: 8px; margin-bottom: 8px;
+    background: #000; display: block; flex-shrink: 0; object-fit: contain;
+  }
   .mission-photo {
-    width: 100%; height: clamp(150px, 42vw, 210px); border-radius: 8px; overflow: hidden;
+    width: 100%; height: clamp(120px, 40vw, 180px); border-radius: 8px; overflow: hidden;
     margin-bottom: 8px; flex-shrink: 0; background: rgba(0, 0, 0, 0.03);
     display: flex; align-items: center; justify-content: center;
   }
   .mission-photo img { width: 100%; height: 100%; object-fit: contain; display: block; }
-  .mission-video {
-    width: 100%; height: clamp(150px, 42vw, 210px); border-radius: 8px; margin-bottom: 8px;
-    background: #000; display: block; flex-shrink: 0; object-fit: contain;
-  }
   .mission-caption { margin: 0; font-size: 11.5px; line-height: 1.4; color: var(--ink); }
   .mission-caption strong { color: var(--brown-strong); font-weight: 800; }
 
-  /* ---- TikTok embeds section ---- */
+  /* TikTok Grid */
   .tiktok-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 16px;
+    gap: 8px;
+    margin: 8px 0;
+    width: 100%;
   }
   .tiktok-embed-wrap {
     display: flex;
     justify-content: center;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    background: var(--card);
+    background: var(--bg);
     border: 1px solid var(--line);
+    max-height: 150px;
   }
   .tiktok-embed-wrap iframe {
     width: 100%;
-    min-height: 500px;
+    min-height: 150px;
   }
 
-  .req-empty {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    color: var(--ink); font-size: 14px; font-weight: 600;
-    background: var(--amber-bg); border: 2px solid var(--amber); border-radius: 14px;
-    padding: 24px 20px; text-align: center; min-height: 80px;
-  }
-  .req-filled {
-    background: var(--card); border: 1.5px solid var(--line); border-radius: 14px;
-    padding: 16px 18px;
-  }
-  .req-filled .req-part {
-    font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; color: var(--brown);
-    text-transform: uppercase; display: block; margin-bottom: 10px;
-  }
-
-  footer.notes {
-    margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
-    font-size: 11.5px; color: var(--ink-soft);
-  }
-  footer.notes b { color: var(--ink); }
-
-  /* ---- sticky submit bar ---- */
-  .submit-bar {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
-    background: var(--card); border-top: 1px solid var(--line);
-    box-shadow: 0 -8px 24px rgba(20, 15, 8, 0.14);
-    padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px));
-    display: flex; justify-content: center;
-  }
-  .submit-bar-inner { width: 100%; max-width: 720px; display: flex; align-items: center; gap: 12px; }
-  .submit-bar-text { display: none; font-size: 12px; color: var(--ink-soft); flex: 1; }
-  @media (min-width: 480px) { .submit-bar-text { display: block; } }
-  #openModalBtn {
-    flex-shrink: 0; margin-left: auto;
-    font-family: inherit; font-weight: 800; font-size: 15px; letter-spacing: 0.02em;
-    color: #fff; background: var(--brown); border: none; border-radius: 999px;
-    padding: 14px 30px; cursor: pointer; display: flex; align-items: center; gap: 8px;
-    box-shadow: 0 4px 0 var(--brown-strong);
-  }
-  #openModalBtn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--brown-strong); }
-  @media (max-width: 479px) { .submit-bar-inner { justify-content: center; } #openModalBtn { width: 100%; justify-content: center; } }
-
-  /* ---- modal ---- */
+  /* Modal */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(20, 15, 8, 0.45);
     display: flex; align-items: flex-end; justify-content: center;
@@ -348,12 +295,6 @@
     width: 100%; font-family: var(--font-ui); font-size: 13px; color: var(--ink);
     background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 9px;
   }
-  input.mono { font-family: var(--font-mono); }
-  input.invalid { border-color: var(--danger-ink); }
-  select:focus-visible, input:focus-visible, button:focus-visible, .part-chip:focus-visible {
-    outline: 2px solid var(--brown); outline-offset: 2px;
-  }
-  .etc-input { margin-top: 6px; }
 
   .modal-submit-wrap { margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
   #submitBtn {
@@ -375,6 +316,26 @@
     font-family: inherit; font-weight: 700; font-size: 13.5px; color: var(--ink);
     background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 9px 22px; cursor: pointer;
   }
+
+  .submit-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: var(--card); border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px rgba(20, 15, 8, 0.14);
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px));
+    display: flex; justify-content: center;
+  }
+  .submit-bar-inner { width: 100%; max-width: 720px; display: flex; align-items: center; gap: 12px; }
+  .submit-bar-text { display: none; font-size: 12px; color: var(--ink-soft); flex: 1; }
+  @media (min-width: 480px) { .submit-bar-text { display: block; } }
+  #openModalBtn {
+    flex-shrink: 0; margin-left: auto;
+    font-family: inherit; font-weight: 800; font-size: 15px; letter-spacing: 0.02em;
+    color: #fff; background: var(--brown); border: none; border-radius: 999px;
+    padding: 14px 30px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 0 var(--brown-strong);
+  }
+  #openModalBtn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--brown-strong); }
+  @media (max-width: 479px) { .submit-bar-inner { justify-content: center; } #openModalBtn { width: 100%; justify-content: center; } }
 </style>
 
 </head>
@@ -388,7 +349,7 @@
     </div>
   </div>
 
-  <!-- Logic Section with Toggleable Scripts -->
+  <!-- Logic Section -->
   <div class="logic-section">
     <h3 class="logic-title">📝 Understand the Logic (Scripts Below)</h3>
     <div class="script-accordion">
@@ -462,17 +423,17 @@ This cream is a glow-up deceiver lol</div>
     <div class="mission-card mission-card--hook">
       <span class="mission-step">Hook</span>
       <video id="hookVideo" class="mission-video" autoplay muted playsinline loop></video>
-      <p class="mission-caption" id="hookCaption">Sweat-drenched, flushed skin showing heat response</p>
+      <p class="mission-caption">Sweat-drenched, flushed skin</p>
     </div>
     <div class="mission-card mission-card--text">
       <span class="mission-step">Apply</span>
-      <div class="mission-photo" id="applyPhoto"></div>
-      <p class="mission-caption">Apply and massage to activate <strong>heat circulation</strong></p>
+      <div class="tiktok-grid" id="applyVideoGrid"></div>
+      <p class="mission-caption">Select a body part →</p>
     </div>
     <div class="mission-card mission-card--text">
       <span class="mission-step">After</span>
       <div class="mission-photo" id="afterPhoto"></div>
-      <p class="mission-caption">Show the <strong>flushed, energized</strong> result.</p>
+      <p class="mission-caption">Show <strong>flushed, energized</strong></p>
     </div>
   </div>
 
@@ -480,24 +441,14 @@ This cream is a glow-up deceiver lol</div>
     <div class="block-head">
       <span class="block-kicker">Target Area</span>
       <h2 class="block-title">Choose Your Body Part</h2>
-      <p class="block-note">Select an area to see example videos of how creators applied it.</p>
+      <p class="block-note">Select an area to see example videos.</p>
     </div>
     <div class="part-grid" id="partGrid"></div>
   </section>
 
-  <div id="videoShowcase" style="display: none;">
-    <div style="margin-top: 26px;">
-      <div class="block-head">
-        <span class="block-kicker" id="showcaseLabel"></span>
-        <h3 style="font-size: 16px; font-weight: 800; margin: 0; color: var(--brown-strong);">Example Videos</h3>
-      </div>
-      <div class="tiktok-grid" id="tiktokGrid"></div>
-    </div>
-  </div>
-
   <div class="submit-bar">
     <div class="submit-bar-inner">
-      <span class="submit-bar-text">Ready to submit your video?</span>
+      <span class="submit-bar-text">Ready to submit?</span>
       <button type="button" id="openModalBtn">Submit Your Entry →</button>
     </div>
   </div>
@@ -513,13 +464,13 @@ This cream is a glow-up deceiver lol</div>
         <div>
           <label class="small">TikTok Handle</label>
           <input type="text" id="tiktokHandle" placeholder="yourhandle" />
-          <div class="field-hint">Your TikTok handle (e.g., fitcreator)</div>
+          <div class="field-hint">Your TikTok handle</div>
         </div>
 
         <p class="modal-sub">How many videos are you submitting?</p>
         <div class="count-row" id="countRow"></div>
         <div id="rows">
-          <div class="row-empty">Select how many videos you're submitting.</div>
+          <div class="row-empty">Select how many videos.</div>
         </div>
         <div class="modal-submit-wrap">
           <button id="submitBtn">Submit Entry</button>
@@ -530,7 +481,7 @@ This cream is a glow-up deceiver lol</div>
       <div class="success-panel" id="successPanel" hidden>
         <div class="success-check">✓</div>
         <p class="title">Submission Complete!</p>
-        <p class="sub">Thanks for joining the Heat Challenge!</p>
+        <p class="sub">Thanks for joining!</p>
         <button type="button" id="closeSuccessBtn">Close</button>
       </div>
     </div>
@@ -538,27 +489,18 @@ This cream is a glow-up deceiver lol</div>
 </div>
 
 <script>
-  // ---- Script Accordion Logic ----
+  // Script accordion
   document.querySelectorAll('.script-toggle').forEach(btn => {
     btn.addEventListener('click', function() {
       const scriptId = this.getAttribute('data-script');
       const content = document.getElementById(`script-${scriptId}`);
-
-      // Close other scripts
-      document.querySelectorAll('.script-toggle').forEach(b => {
-        if (b !== this) b.classList.remove('open');
-      });
-      document.querySelectorAll('.script-content').forEach(c => {
-        c.classList.remove('open');
-      });
-
-      // Toggle current
-      this.classList.toggle('open');
-      content.classList.toggle('open');
+      document.querySelectorAll('.script-toggle').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.script-content').forEach(c => c.classList.remove('open'));
+      this.classList.add('open');
+      content.classList.add('open');
     });
   });
 
-  // ---- Part/Area Selection Logic ----
   const PARTS = [
     { id: "thighs", label: "Thighs", icon: "🏃‍♀️" },
     { id: "trapezius", label: "Trapezius", icon: "🏋️" },
@@ -568,34 +510,21 @@ This cream is a glow-up deceiver lol</div>
   ];
 
   const TIKTOK_VIDEOS = {
-    thighs: [
-      "7648828865028115733",
-      "7633868064089525535"
-    ],
-    trapezius: [
-      "7572180749122669854",
-      "7573514707500354846"
-    ],
-    belly: [
-      "7660766255464418574"
-    ],
-    waist: [
-      "7568900008263585046"
-    ],
-    arms: [
-      "7289962222917389611",
-      "7660766255464418574"
-    ]
+    thighs: ["7648828865028115733", "7633868064089525535"],
+    trapezius: ["7572180749122669854", "7573514707500354846"],
+    belly: ["7660766255464418574"],
+    waist: ["7568900008263585046"],
+    arms: ["7289962222917389611", "7660766255464418574"]
   };
 
   let selectedPart = null;
   let selectedCount = 0;
+  let currentHookVideo = 1;
 
   const partGrid = document.getElementById("partGrid");
   const hookVideo = document.getElementById("hookVideo");
-  const videoShowcase = document.getElementById("videoShowcase");
-  const tiktokGrid = document.getElementById("tiktokGrid");
-  const showcaseLabel = document.getElementById("showcaseLabel");
+  const applyVideoGrid = document.getElementById("applyVideoGrid");
+  const afterPhoto = document.getElementById("afterPhoto");
   const countRow = document.getElementById("countRow");
   const rowsWrap = document.getElementById("rows");
   const submitBtn = document.getElementById("submitBtn");
@@ -606,10 +535,10 @@ This cream is a glow-up deceiver lol</div>
   const modalForm = document.getElementById("modalForm");
   const successPanel = document.getElementById("successPanel");
 
-  // Setup Hook Video Loop (cycling through 3 videos)
-  let currentHookVideo = 1;
+  // Hook video loop
   function loadHookVideo() {
-    hookVideo.src = `../assets/heat-hook-${currentHookVideo}.mp4`;
+    const src = `../assets/heat-hook-${currentHookVideo}.mp4`;
+    hookVideo.src = src;
     hookVideo.onended = () => {
       currentHookVideo = currentHookVideo === 3 ? 1 : currentHookVideo + 1;
       loadHookVideo();
@@ -638,24 +567,19 @@ This cream is a glow-up deceiver lol</div>
 
   function renderTikToks() {
     if (!selectedPart) {
-      videoShowcase.style.display = "none";
+      applyVideoGrid.innerHTML = "";
       return;
     }
 
-    videoShowcase.style.display = "block";
-    const part = PARTS.find(p => p.id === selectedPart);
-    showcaseLabel.textContent = `${part.label} Examples`;
-
     const videoIds = TIKTOK_VIDEOS[selectedPart] || [];
-    tiktokGrid.innerHTML = videoIds.map(id => `
+    applyVideoGrid.innerHTML = videoIds.map(id => `
       <div class="tiktok-embed-wrap">
-        <iframe src="https://www.tiktok.com/embed/v2/${id}" width="100%" height="600" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe src="https://www.tiktok.com/embed/v2/${id}" width="100%" height="150" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>
     `).join('');
 
-    // Reload TikTok embeds
     if (window.tiktok) {
-      window.tiktok.embed.lib.render(tiktokGrid);
+      window.tiktok.embed.lib.render(applyVideoGrid);
     }
   }
 
@@ -664,7 +588,7 @@ This cream is a glow-up deceiver lol</div>
     PARTS.forEach((p) => {
       html += `<option value="${p.id}" ${selectedId === p.id ? "selected" : ""}>${p.label}</option>`;
     });
-    html += `<option value="etc" ${selectedId === "etc" ? "selected" : ""}>Other (write in)</option>`;
+    html += `<option value="etc" ${selectedId === "etc" ? "selected" : ""}>Other</option>`;
     return html;
   }
 
@@ -686,7 +610,7 @@ This cream is a glow-up deceiver lol</div>
 
   function renderRows() {
     if (!selectedCount) {
-      rowsWrap.innerHTML = `<div class="row-empty">Select how many videos you're submitting.</div>`;
+      rowsWrap.innerHTML = `<div class="row-empty">Select how many videos.</div>`;
       return;
     }
     rowsWrap.innerHTML = "";
@@ -700,7 +624,7 @@ This cream is a glow-up deceiver lol</div>
             <div>
               <label class="small">Body Part</label>
               <select class="part-select">${partOptionsHtml(null)}</select>
-              <input type="text" class="etc-input" placeholder="Type the area" style="display:none;" />
+              <input type="text" class="etc-input" placeholder="Type area" style="display:none;" />
             </div>
             <div>
               <label class="small">Video Link</label>
@@ -718,33 +642,24 @@ This cream is a glow-up deceiver lol</div>
     }
   }
 
-  submitBtn.addEventListener("click", async () => {
+  submitBtn.addEventListener("click", () => {
     if (!selectedCount) return;
-
     const tiktokHandle = document.getElementById("tiktokHandle").value.trim();
     if (!tiktokHandle) {
       alert("Please enter your TikTok Handle");
       return;
     }
-
     const rows = document.querySelectorAll(".quest-row");
     let allValid = true;
-
     rows.forEach((row) => {
       const sel = row.querySelector(".part-select");
       const url = row.querySelector(".video-link");
-
-      if (!sel.value || !url.value.trim()) {
-        allValid = false;
-      }
+      if (!sel.value || !url.value.trim()) allValid = false;
     });
-
     if (!allValid) {
       alert("Please fill in all fields");
       return;
     }
-
-    // Show success panel
     modalForm.hidden = true;
     successPanel.hidden = false;
   });
@@ -769,12 +684,10 @@ This cream is a glow-up deceiver lol</div>
     if (e.key === "Escape" && modalOverlay.classList.contains("open")) closeModal();
   });
 
-  // Initialize
   renderParts();
   renderCountRow();
   renderRows();
 
-  // Load TikTok embed script
   const script = document.createElement('script');
   script.src = 'https://www.tiktok.com/embed.js';
   script.async = true;
