@@ -538,15 +538,25 @@ This cream is a glow-up deceiver lol</div>
 </div>
 
 <script>
-  // Script accordion
+  // Script accordion with toggle
   document.querySelectorAll('.script-toggle').forEach(btn => {
     btn.addEventListener('click', function() {
       const scriptId = this.getAttribute('data-script');
       const content = document.getElementById(`script-${scriptId}`);
-      document.querySelectorAll('.script-toggle').forEach(b => b.classList.remove('open'));
-      document.querySelectorAll('.script-content').forEach(c => c.classList.remove('open'));
-      this.classList.add('open');
-      content.classList.add('open');
+
+      // If this script is already open, close it
+      if (this.classList.contains('open')) {
+        this.classList.remove('open');
+        content.classList.remove('open');
+      } else {
+        // Close all other scripts first
+        document.querySelectorAll('.script-toggle').forEach(b => b.classList.remove('open'));
+        document.querySelectorAll('.script-content').forEach(c => c.classList.remove('open'));
+
+        // Open this script
+        this.classList.add('open');
+        content.classList.add('open');
+      }
     });
   });
 
