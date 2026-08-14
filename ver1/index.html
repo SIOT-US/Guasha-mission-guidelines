@@ -574,10 +574,27 @@ This cream is a glow-up deceiver lol</div>
   const modalForm = document.getElementById("modalForm");
   const successPanel = document.getElementById("successPanel");
 
-  // Hook video loop
+  // Hook video loop with auto-rotation
+  let hookVideoTimer;
   function loadHookVideo() {
     const src = `../assets/heat-hook-${currentHookVideo}.mp4`;
     hookVideo.src = src;
+    hookVideo.load();
+    hookVideo.play();
+
+    // Clear previous timer
+    if (hookVideoTimer) clearTimeout(hookVideoTimer);
+
+    // onloadedmetadata: use actual video duration for timing
+    hookVideo.onloadedmetadata = () => {
+      const duration = hookVideo.duration * 1000 + 500; // Convert to ms + buffer
+      hookVideoTimer = setTimeout(() => {
+        currentHookVideo = currentHookVideo === 3 ? 1 : currentHookVideo + 1;
+        loadHookVideo();
+      }, duration);
+    };
+
+    // Fallback: also handle onended
     hookVideo.onended = () => {
       currentHookVideo = currentHookVideo === 3 ? 1 : currentHookVideo + 1;
       loadHookVideo();
