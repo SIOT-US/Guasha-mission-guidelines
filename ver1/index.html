@@ -759,10 +759,13 @@ This cream is a glow-up deceiver lol</div>
   renderCountRow();
   renderRows();
 
-  const script = document.createElement('script');
-  script.src = 'https://www.tiktok.com/embed.js';
-  script.async = true;
-  document.body.appendChild(script);
+  // Load TikTok embed script after page loads
+  window.addEventListener('load', function() {
+    const script = document.createElement('script');
+    script.src = 'https://www.tiktok.com/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+  });
 </script>
 
 </body>
