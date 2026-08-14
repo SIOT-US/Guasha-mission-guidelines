@@ -212,6 +212,25 @@
   .mission-photo img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .mission-caption { margin: 0; font-size: 11.5px; line-height: 1.4; color: var(--ink); }
   .mission-caption strong { color: var(--brown-strong); font-weight: 800; }
+  .mission-caption-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--brown);
+    cursor: pointer;
+    padding: 0;
+    margin: 8px 0 0;
+    text-decoration: underline;
+    transition: color 0.15s ease;
+  }
+  .mission-caption-btn:hover {
+    color: var(--brown-strong);
+  }
+  .mission-caption-btn:active {
+    opacity: 0.7;
+  }
 
   /* TikTok Carousel */
   .tiktok-grid {
@@ -469,15 +488,23 @@ This cream is a glow-up deceiver lol</div>
     </div>
     <div class="mission-card mission-card--text">
       <span class="mission-step">Apply</span>
-      <div id="applyVideoContainer">
+
+      <!-- Part Selector (shown first) -->
+      <div id="applyPartSelector">
+        <div class="part-grid" id="applyPartGrid"></div>
+        <button id="selectPartBtn" class="mission-caption-btn">Select a body part</button>
+      </div>
+
+      <!-- Video Container (shown after selection) -->
+      <div id="applyVideoContainer" style="display: none;">
         <div class="carousel-controls" id="applyControls" style="display: none;">
           <button class="carousel-btn" id="prevApplyBtn">◀</button>
           <span class="video-counter" id="applyCounter">1 of 2</span>
           <button class="carousel-btn" id="nextApplyBtn">▶</button>
         </div>
-        <video id="applyVideo" class="mission-video" controls style="display: none;"></video>
+        <video id="applyVideo" class="mission-video" controls></video>
+        <button id="chooseAnotherBtn" class="mission-caption-btn">Choose Another Body Part</button>
       </div>
-      <p class="mission-caption">Select a body part →</p>
     </div>
     <div class="mission-card mission-card--text">
       <span class="mission-step">After</span>
@@ -590,12 +617,17 @@ This cream is a glow-up deceiver lol</div>
   };
 
   const partGrid = document.getElementById("partGrid");
+  const applyPartGrid = document.getElementById("applyPartGrid");
+  const applyPartSelector = document.getElementById("applyPartSelector");
+  const applyVideoContainer = document.getElementById("applyVideoContainer");
   const hookVideo = document.getElementById("hookVideo");
   const hookControls = document.getElementById("hookControls");
   const hookCounter = document.getElementById("hookCounter");
   const applyVideo = document.getElementById("applyVideo");
   const applyControls = document.getElementById("applyControls");
   const applyCounter = document.getElementById("applyCounter");
+  const selectPartBtn = document.getElementById("selectPartBtn");
+  const chooseAnotherBtn = document.getElementById("chooseAnotherBtn");
   const afterPhoto = document.getElementById("afterPhoto");
   const countRow = document.getElementById("countRow");
   const rowsWrap = document.getElementById("rows");
@@ -641,9 +673,29 @@ This cream is a glow-up deceiver lol</div>
       btn.addEventListener("click", () => {
         selectedPart = p.id;
         renderParts();
-        showApplyVideo();
       });
       partGrid.appendChild(btn);
+    });
+  }
+
+  function renderApplyParts() {
+    applyPartGrid.innerHTML = "";
+    PARTS.forEach((p) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "part-chip" + (selectedPart === p.id ? " is-selected" : "");
+      btn.innerHTML = `
+        <span class="icon">${p.icon}</span>
+        <span class="txt"><b>${p.label}</b></span>
+      `;
+      btn.addEventListener("click", () => {
+        selectedPart = p.id;
+        renderApplyParts();
+        showApplyVideo();
+        applyPartSelector.style.display = "none";
+        applyVideoContainer.style.display = "block";
+      });
+      applyPartGrid.appendChild(btn);
     });
   }
 
@@ -791,9 +843,19 @@ This cream is a glow-up deceiver lol</div>
     if (e.key === "Escape" && modalOverlay.classList.contains("open")) closeModal();
   });
 
+  // Initialize
   renderParts();
+  renderApplyParts();
   renderCountRow();
   renderRows();
+
+  // Button events
+  chooseAnotherBtn.addEventListener('click', () => {
+    selectedPart = null;
+    renderApplyParts();
+    applyPartSelector.style.display = 'block';
+    applyVideoContainer.style.display = 'none';
+  });
 
 </script>
 
