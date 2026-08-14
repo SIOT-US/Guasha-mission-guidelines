@@ -459,12 +459,24 @@ This cream is a glow-up deceiver lol</div>
   <div class="mission-grid">
     <div class="mission-card mission-card--hook">
       <span class="mission-step">Hook</span>
-      <video id="hookVideo" class="mission-video" autoplay muted playsinline loop></video>
+      <div class="carousel-controls" id="hookControls" style="display: none;">
+        <button class="carousel-btn" id="prevHookBtn">◀</button>
+        <span class="video-counter" id="hookCounter">1 of 3</span>
+        <button class="carousel-btn" id="nextHookBtn">▶</button>
+      </div>
+      <video id="hookVideo" class="mission-video" controls></video>
       <p class="mission-caption">Sweat-drenched, flushed skin</p>
     </div>
     <div class="mission-card mission-card--text">
       <span class="mission-step">Apply</span>
-      <div class="tiktok-grid" id="applyVideoGrid"></div>
+      <div id="applyVideoContainer">
+        <div class="carousel-controls" id="applyControls" style="display: none;">
+          <button class="carousel-btn" id="prevApplyBtn">◀</button>
+          <span class="video-counter" id="applyCounter">1 of 2</span>
+          <button class="carousel-btn" id="nextApplyBtn">▶</button>
+        </div>
+        <video id="applyVideo" class="mission-video" controls style="display: none;"></video>
+      </div>
       <p class="mission-caption">Select a body part →</p>
     </div>
     <div class="mission-card mission-card--text">
@@ -556,13 +568,24 @@ This cream is a glow-up deceiver lol</div>
 
   let selectedPart = null;
   let selectedCount = 0;
-  let currentHookVideo = 1;
-  let currentVideoIndex = 0;
-  let currentVideos = [];
+  let hookVideoIndex = 0;
+  let applyVideoIndex = 0;
+  const hookVideos = 3; // heat-hook-1, 2, 3
+  const applyVideos = {
+    thighs: 2,
+    trapezius: 2,
+    belly: 1,
+    waist: 1,
+    arms: 2
+  };
 
   const partGrid = document.getElementById("partGrid");
   const hookVideo = document.getElementById("hookVideo");
-  const applyVideoGrid = document.getElementById("applyVideoGrid");
+  const hookControls = document.getElementById("hookControls");
+  const hookCounter = document.getElementById("hookCounter");
+  const applyVideo = document.getElementById("applyVideo");
+  const applyControls = document.getElementById("applyControls");
+  const applyCounter = document.getElementById("applyCounter");
   const afterPhoto = document.getElementById("afterPhoto");
   const countRow = document.getElementById("countRow");
   const rowsWrap = document.getElementById("rows");
@@ -574,32 +597,25 @@ This cream is a glow-up deceiver lol</div>
   const modalForm = document.getElementById("modalForm");
   const successPanel = document.getElementById("successPanel");
 
-  // Hook video loop with auto-rotation
-  let hookVideoTimer;
+  // Hook video with button controls
   function loadHookVideo() {
-    const src = `../assets/heat-hook-${currentHookVideo}.mp4`;
+    const videoNum = hookVideoIndex + 1;
+    const src = `../assets/heat-hook-${videoNum}.mp4`;
     hookVideo.src = src;
-    hookVideo.load();
-    hookVideo.play();
-
-    // Clear previous timer
-    if (hookVideoTimer) clearTimeout(hookVideoTimer);
-
-    // onloadedmetadata: use actual video duration for timing
-    hookVideo.onloadedmetadata = () => {
-      const duration = hookVideo.duration * 1000 + 500; // Convert to ms + buffer
-      hookVideoTimer = setTimeout(() => {
-        currentHookVideo = currentHookVideo === 3 ? 1 : currentHookVideo + 1;
-        loadHookVideo();
-      }, duration);
-    };
-
-    // Fallback: also handle onended
-    hookVideo.onended = () => {
-      currentHookVideo = currentHookVideo === 3 ? 1 : currentHookVideo + 1;
-      loadHookVideo();
-    };
+    hookCounter.textContent = `${videoNum} of ${hookVideos}`;
+    hookControls.style.display = 'flex';
   }
+
+  document.getElementById('prevHookBtn').addEventListener('click', () => {
+    hookVideoIndex = (hookVideoIndex - 1 + hookVideos) % hookVideos;
+    loadHookVideo();
+  });
+
+  document.getElementById('nextHookBtn').addEventListener('click', () => {
+    hookVideoIndex = (hookVideoIndex + 1) % hookVideos;
+    loadHookVideo();
+  });
+
   loadHookVideo();
 
   function renderParts() {
@@ -615,61 +631,54 @@ This cream is a glow-up deceiver lol</div>
       btn.addEventListener("click", () => {
         selectedPart = p.id;
         renderParts();
-        renderTikToks();
+        showApplyVideo();
       });
       partGrid.appendChild(btn);
     });
   }
 
-  function renderTikToks() {
+  function showApplyVideo() {
     if (!selectedPart) {
-      applyVideoGrid.innerHTML = "";
+      applyVideo.style.display = 'none';
+      applyControls.style.display = 'none';
       return;
     }
 
-    currentVideos = TIKTOK_VIDEOS[selectedPart] || [];
-    currentVideoIndex = 0;
-    showTikTokVideo();
-  }
-
-  function showTikTokVideo() {
-    if (currentVideos.length === 0) {
-      applyVideoGrid.innerHTML = "";
+    const totalVideos = applyVideos[selectedPart] || 0;
+    if (totalVideos === 0) {
+      applyVideo.style.display = 'none';
+      applyControls.style.display = 'none';
       return;
     }
 
-    const videoId = currentVideos[currentVideoIndex];
-    const totalVideos = currentVideos.length;
-
-    applyVideoGrid.innerHTML = `
-      ${totalVideos > 1 ? `
-        <div class="carousel-controls">
-          <button class="carousel-btn" id="prevVideoBtn">◀</button>
-          <span class="video-counter">${currentVideoIndex + 1} of ${totalVideos}</span>
-          <button class="carousel-btn" id="nextVideoBtn">▶</button>
-        </div>
-      ` : ''}
-      <div class="tiktok-embed-wrap">
-        <iframe src="https://www.tiktok.com/embed/v2/${videoId}" width="100%" height="450" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      </div>
-    `;
-
-    if (totalVideos > 1) {
-      document.getElementById('prevVideoBtn').addEventListener('click', () => {
-        currentVideoIndex = (currentVideoIndex - 1 + totalVideos) % totalVideos;
-        showTikTokVideo();
-      });
-
-      document.getElementById('nextVideoBtn').addEventListener('click', () => {
-        currentVideoIndex = (currentVideoIndex + 1) % totalVideos;
-        showTikTokVideo();
-      });
-    }
-
-    if (window.tiktok) {
-      window.tiktok.embed.lib.render(applyVideoGrid);
-    }
+    applyVideoIndex = 0; // Reset to first video when changing parts
+    const videoNum = applyVideoIndex + 1;
+    const src = `../assets/${selectedPart}-${videoNum}.mp4`;
+    applyVideo.src = src;
+    applyCounter.textContent = `${videoNum} of ${totalVideos}`;
+    applyControls.style.display = 'flex';
+    applyVideo.style.display = 'block';
   }
+
+  document.getElementById('prevApplyBtn').addEventListener('click', () => {
+    if (!selectedPart) return;
+    const totalVideos = applyVideos[selectedPart] || 0;
+    applyVideoIndex = (applyVideoIndex - 1 + totalVideos) % totalVideos;
+    const videoNum = applyVideoIndex + 1;
+    const src = `../assets/${selectedPart}-${videoNum}.mp4`;
+    applyVideo.src = src;
+    applyCounter.textContent = `${videoNum} of ${totalVideos}`;
+  });
+
+  document.getElementById('nextApplyBtn').addEventListener('click', () => {
+    if (!selectedPart) return;
+    const totalVideos = applyVideos[selectedPart] || 0;
+    applyVideoIndex = (applyVideoIndex + 1) % totalVideos;
+    const videoNum = applyVideoIndex + 1;
+    const src = `../assets/${selectedPart}-${videoNum}.mp4`;
+    applyVideo.src = src;
+    applyCounter.textContent = `${videoNum} of ${totalVideos}`;
+  });
 
   function partOptionsHtml(selectedId) {
     let html = '<option value="" disabled ' + (selectedId ? "" : "selected") + '>Select area</option>';
@@ -776,13 +785,6 @@ This cream is a glow-up deceiver lol</div>
   renderCountRow();
   renderRows();
 
-  // Load TikTok embed script after page loads
-  window.addEventListener('load', function() {
-    const script = document.createElement('script');
-    script.src = 'https://www.tiktok.com/embed.js';
-    script.async = true;
-    document.body.appendChild(script);
-  });
 </script>
 
 </body>
